@@ -40,6 +40,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'pendaftar' => [
+            'driver' => 'jwt',
+            'provider' => 'pendaftar'
+        ],
+        'panel' => [
+            'driver' => 'jwt',
+            'provider' => 'panel'
+        ]
     ],
 
     /*
@@ -61,6 +69,14 @@ return [
 
     'providers' => [
         'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+        'panel' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+        'pendaftar' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
