@@ -11,14 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('barang', function (Blueprint $table) {
+        Schema::create('biodata_umums', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('kode_barang');
-            $table->string('thumbnail');
-            $table->string('keterangan');
-            $table->string('kategori');
-            $table->string('stok');
             $table->timestamps();
         });
     }
@@ -28,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('barang');
+        Schema::dropIfExists('biodata_umums');
     }
 };

@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements JWTSubject
+class StudentUser extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -18,10 +18,12 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'nama',
-        'username',
-        'jabatan',
-        'role',
+        'nama_lengkap',
+        'email',
+        'tgl_lahir',
+        'status',
+        'tgl_daftar',
+        'gelombang',
         'password',
     ];
 
