@@ -6,8 +6,8 @@ use App\Models\Buku;
 use Illuminate\Support\Facades\Validator;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\BukuResource;
-
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
@@ -16,8 +16,8 @@ class BookController extends Controller
     public function index()
     {
         // dapatkan semua buku
-        $books = Buku::latest()->paginate(5);
-        return new BukuResource(true, 'List Data Buku', $books);
+        $books = User::latest()->paginate(5);
+        return new UserResource(true, 'List Data User', $books);
     }
     public function store(Request $request)
     {
@@ -48,12 +48,12 @@ class BookController extends Controller
             'tahun_terbit' => $request->tahun_terbit,
         ]);
 
-        return new BukuResource(true, 'Data buku berhasil ditambahkan', $buku);
+        return new UserResource(true, 'Data buku berhasil ditambahkan', $buku);
     }
     public function show($id)
     {
         $buku = Buku::find($id);
-        return new BukuResource(true, 'Detail buku', $buku);
+        return new UserResource(true, 'Detail buku', $buku);
     }
     public function update(Request $request, $id)
     {
@@ -95,13 +95,13 @@ class BookController extends Controller
                 'tahun_terbit' => $request->tahun_terbit,
             ]);
         }
-        return new BukuResource(true, 'Buku berhasil diupdate', $buku);
+        return new UserResource(true, 'Buku berhasil diupdate', $buku);
     }
     public function destroy($id)
     {
         $buku = Buku::find($id);
         Storage::delete('public/buku/thumbnail' . basename($buku->image));
         $buku->delete();
-        return new BukuResource(true, 'Data buku berhasil dihapus', null);
+        return new UserResource(true, 'Data buku berhasil dihapus', null);
     }
 }

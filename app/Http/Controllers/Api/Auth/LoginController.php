@@ -17,7 +17,7 @@ class LoginController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        $credentials = $request->only("email", "password");
+        $credentials = $request->only("username", "password");
         if (!$token = auth()->guard('panel')->attempt($credentials)) {
             return response()->json([
                 'success' => false,
@@ -34,13 +34,13 @@ class LoginController extends Controller
     public function loginPendaftar(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "username" => "required",
+            "email" => "required",
             "password" => "required"
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        $credentials = $request->only("username", "password");
+        $credentials = $request->only("email", "password");
         if (!$token = auth()->guard('pendaftar')->attempt($credentials)) {
             return response()->json([
                 'success' => false,
