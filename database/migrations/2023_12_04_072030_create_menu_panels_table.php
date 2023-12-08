@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menu_panels', function (Blueprint $table) {
+        Schema::create('menu_panel', function (Blueprint $table) {
             $table->id();
+            
             $table->timestamps();
         });
     }
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menu_panels');
+        Schema::dropIfExists('menu_panel');
     }
 };

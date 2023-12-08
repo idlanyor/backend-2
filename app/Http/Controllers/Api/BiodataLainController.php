@@ -8,9 +8,7 @@ use App\Http\Requests\UpdateBiodataLainRequest;
 
 class BiodataLainController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         //

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\GelombangAktif;
+use App\Http\Controllers\Controller;
+use App\Models\GelombangPendaftaran;
 use App\Http\Requests\StoreGelombangAktifRequest;
 use App\Http\Requests\UpdateGelombangAktifRequest;
 
@@ -35,7 +36,7 @@ class GelombangAktifController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(GelombangAktif $gelombangAktif)
+    public function show(GelombangPendaftaran $gelombangAktif)
     {
         //
     }
@@ -43,7 +44,7 @@ class GelombangAktifController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(GelombangAktif $gelombangAktif)
+    public function edit(GelombangPendaftaran $gelombangAktif)
     {
         //
     }
@@ -51,7 +52,7 @@ class GelombangAktifController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGelombangAktifRequest $request, GelombangAktif $gelombangAktif)
+    public function update( GelombangPendaftaran $gelombangAktif)
     {
         //
     }
@@ -59,7 +60,7 @@ class GelombangAktifController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(GelombangAktif $gelombangAktif)
+    public function destroy(GelombangPendaftaran $gelombangAktif)
     {
         //
     }

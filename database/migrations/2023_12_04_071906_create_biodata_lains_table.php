@@ -11,8 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('biodata_lains', function (Blueprint $table) {
+        Schema::create('pd_biodata_lain', function (Blueprint $table) {
             $table->id();
+            $table->string('asal_sekolah');
+            $table->string('nisn');
+            $table->string('nm_bapak');
+            $table->string('nm_ibu');
+            $table->int('pkj_bapak');
+            $table->int('pkj_ibu');
+            $table->int('peng_bapak');
+            $table->int('pengh_ibu');
+            $table->int('pend_t_ayah');
+            $table->int('pend_t_ibu');
+            $table->int('id_user');
             $table->timestamps();
         });
     }
@@ -22,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('biodata_lains');
+        Schema::dropIfExists('pd_biodata_lain');
     }
 };

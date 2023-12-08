@@ -11,7 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
-class BookController extends Controller
+class UserController extends Controller
 {
     public function index()
     {
