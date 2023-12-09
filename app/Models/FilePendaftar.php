@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class FilePendaftar extends Model
 {
     use HasFactory;
+    protected $table = '';
+    protected $fillable = [];
 }

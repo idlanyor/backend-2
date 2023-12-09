@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menu_panel', function (Blueprint $table) {
+        Schema::create('cat_pekerjaan_ayah', function (Blueprint $table) {
             $table->id();
-            
+            $table->string('nama');
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menu_panel');
+        Schema::dropIfExists('cat_pekerjaan_ayah');
     }
 };

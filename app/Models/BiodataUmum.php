@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class BiodataUmum extends Model
 {
     use HasFactory;
+    protected $table = '';
+    protected $fillable = [];
+
 }

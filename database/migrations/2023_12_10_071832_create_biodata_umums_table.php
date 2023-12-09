@@ -18,7 +18,8 @@ return new class extends Migration
             $table->enum('jk', ['Laki - laki','Perempuan'])->default('Laki - laki');
             $table->string('tmpt_lahir');
             $table->date('tgl_lahir');
-            $table->int('agama');
+            $table->unsignedBigInteger('agama');
+            $table->foreign('agama')->references('id')->on('cat_agama')->onDelete('cascade');
             $table->string('kewarganegaraan');
             $table->string('addr_prov');
             $table->string('addr_kab');
@@ -27,7 +28,8 @@ return new class extends Migration
             $table->string('addr_dus');
             $table->string('addr_rt');
             $table->string('addr_rw');
-            $table->int('id_user');
+            $table->unsignedBigInteger('id_pendaftar');
+            $table->foreign('id_pendaftar')->references('id')->on('pd_users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
