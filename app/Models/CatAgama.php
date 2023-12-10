@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Posts extends Model
+class CatAgama extends Model
 {
     use HasFactory;
-    protected $table = "";
-    protected $fillable = ['date', 'judul', 'isi', 'lampiran'];
+    protected $table = 'cat_agama';
+    protected $fillable = ['nama'];
 }

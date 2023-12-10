@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class BiodataLain extends Model
 {
-    protected $table = '';
+    protected $table = 'biodata_lain';
     use HasFactory;
 }

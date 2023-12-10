@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class MenuPanel extends Model
 {
     use HasFactory;
-    protected $table = '';
-    protected $fillable = [];
+    protected $table = 'menu_panel';
+    protected $fillable = ['nama_menu', 'url', 'user_role'];
 }
