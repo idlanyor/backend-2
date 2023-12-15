@@ -11,7 +11,7 @@ class BiodataLainController extends Controller
 
     public function index()
     {
-        //
+        $biodata_lain = BiodataLain::all();
     }
 
     /**

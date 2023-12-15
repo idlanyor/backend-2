@@ -1,9 +1,9 @@
 {
     "name": "laravel/laravel",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Backend untuk aplikasi PPDB dibuat oleh tim rosevelt.",
     "keywords": ["laravel", "framework"],
-    "license": "MIT",
+    "license": "ISC",
     "require": {
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",

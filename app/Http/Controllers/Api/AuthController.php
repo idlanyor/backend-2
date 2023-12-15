@@ -9,8 +9,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
-class RegisterController extends Controller
+class AuthController extends Controller
 {
     public function registerPanel(Request $request)
     {
@@ -55,7 +56,7 @@ class RegisterController extends Controller
         $q = GelombangPendaftaran::query();
         $q->where('isAktif', 1);
         $gelombang_aktif = $q->pluck('gelombang_ke');
-        $passw = Carbon::createFromFormat('Y-m-d',$request->tgl_lahir)->format('dmY');
+        $passw = Carbon::createFromFormat('Y-m-d', $request->tgl_lahir)->format('dmY');
         $user = StudentUser::create([
             "nama_lengkap" => $request->nama_lengkap,
             "nik" => $request->nik,
@@ -76,5 +77,61 @@ class RegisterController extends Controller
         return response()->json([
             'success' => false,
         ], 409);
+    }
+    public function loginPanel(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "username" => "required",
+            "password" => "required"
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $credentials = $request->only("username", "password");
+        if (!$token = auth()->guard('panel')->attempt($credentials)) {
+            return response()->json([
+                'success' => false,
+                'code' => 401,
+                'message' => 'Username dan Password tidak sesuai'
+            ], 401);
+        }
+        return response()->json([
+            'success' => true,
+            'user' => auth()->guard('panel')->user(),
+            'token' => $token
+        ], 200);
+    }
+    public function loginPendaftar(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "email" => "required",
+            "password" => "required"
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $credentials = $request->only("email", "password");
+        if (!$token = auth()->guard('pendaftar')->attempt($credentials)) {
+            return response()->json([
+                'success' => false,
+                'code' => 401,
+                'message' => 'Email dan Password tidak sesuai'
+            ], 401);
+        }
+        return response()->json([
+            'success' => true,
+            'user' => auth()->guard('pendaftar')->user(),
+            'token' => $token
+        ], 200);
+    }
+    public function logout(Request $request)
+    {
+        $removeToken = JWTAuth::invalidate(JWTAuth::getToken());
+        if ($removeToken) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Logout berhasil'
+            ]);
+        }
     }
 }
