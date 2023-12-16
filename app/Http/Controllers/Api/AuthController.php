@@ -29,6 +29,7 @@ class AuthController extends Controller
             "username" => $request->username,
             "jabatan" => $request->jabatan,
             "role" => 2,
+            "foto_profil" =>"default.jpg",
             "password" => bcrypt($request->password),
         ]);
         if ($user) {
@@ -47,7 +48,7 @@ class AuthController extends Controller
         $data = $request->json()->all();
         $validator = Validator::make($data, [
             "nama_lengkap" => "required",
-            "email" => "required|email|unique:student_users",
+            "email" => "required|email|unique:pd_users",
             "tgl_lahir" => "required",
         ]);
         if ($validator->fails()) {
@@ -59,7 +60,6 @@ class AuthController extends Controller
         $passw = Carbon::createFromFormat('Y-m-d', $request->tgl_lahir)->format('dmY');
         $user = StudentUser::create([
             "nama_lengkap" => $request->nama_lengkap,
-            "nik" => $request->nik,
             "email" => $request->email,
             "tgl_lahir" => $request->tgl_lahir,
             "password" => bcrypt($passw),
