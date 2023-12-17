@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +14,12 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         GelombangAktifSeeder::run();
+        CatAgamaSeeder::run();
+        CatPekerjaanIbuSeeder::run();
+        CatPekerjaanAyahSeeder::run();
+        CatPendidikanTerakhirSeeder::run();
+        CatPenghasilanSeeder::run();
+        TahapanProsesSeeder::run();
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

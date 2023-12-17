@@ -19,6 +19,7 @@ Route::post('/login', [AuthController::class, 'loginPendaftar'])->name('login');
 // Route Pendaftar After Login
 Route::middleware(['auth:pendaftar'])->group(function () {
     Route::apiResource("/pendaftar", StudentUserController::class);
+    Route::get("/tahapan", [StudentUserController::class,'tabelProsesPendaftaran']);
 });
 // Route Log Out
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

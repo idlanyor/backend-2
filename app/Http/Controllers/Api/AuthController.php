@@ -8,6 +8,7 @@ use App\Models\StudentUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
@@ -29,7 +30,7 @@ class AuthController extends Controller
             "username" => $request->username,
             "jabatan" => $request->jabatan,
             "role" => 2,
-            "foto_profil" =>"default.jpg",
+            "foto_profil" => "default.jpg",
             "password" => bcrypt($request->password),
         ]);
         if ($user) {
@@ -67,6 +68,16 @@ class AuthController extends Controller
             "gelombang" => $gelombang_aktif[0],
             'tgl_daftar' => now()->toDateString()
         ]);
+        $prosesPendaftar = [
+            ['user_id' => $user->id, 'id_tahapan_proses' => 1, 'status' => 'Selesai'],
+            ['user_id' => $user->id, 'id_tahapan_proses' => 2, 'status' => 'Proses'],
+            ['user_id' => $user->id, 'id_tahapan_proses' => 3, 'status' => 'Proses'],
+            ['user_id' => $user->id, 'id_tahapan_proses' => 4, 'status' => 'Proses'],
+            ['user_id' => $user->id, 'id_tahapan_proses' => 5, 'status' => 'Proses'],
+        ];
+        foreach ($prosesPendaftar as $data) {
+            DB::table('tahapan_proses_pendaftar')->insert($data);
+        }
         if ($user) {
             return response()->json([
                 'success' => true,
