@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\StudentUserController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +18,7 @@ Route::post('/registrasi', [AuthController::class, 'registerPendaftar'])->name('
 Route::post('/login', [AuthController::class, 'loginPendaftar'])->name('login');
 // Route Pendaftar After Login
 Route::middleware(['auth:pendaftar'])->group(function () {
-    // Route::apiResource("/buku", BookController::class);
+    Route::apiResource("/user", StudentUserController::class);
 });
 // Route Log Out
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
