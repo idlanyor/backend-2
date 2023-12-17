@@ -18,7 +18,7 @@ Route::post('/registrasi', [AuthController::class, 'registerPendaftar'])->name('
 Route::post('/login', [AuthController::class, 'loginPendaftar'])->name('login');
 // Route Pendaftar After Login
 Route::middleware(['auth:pendaftar'])->group(function () {
-    Route::apiResource("/user", StudentUserController::class);
+    Route::apiResource("/pendaftar", StudentUserController::class);
 });
 // Route Log Out
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
