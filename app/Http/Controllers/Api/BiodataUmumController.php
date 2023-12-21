@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BiodataUmum;
 use App\Http\Requests\StoreBiodataUmumRequest;
 use App\Http\Requests\UpdateBiodataUmumRequest;
+use App\Http\Resources\ApiResource;
 
 class BiodataUmumController extends Controller
 {
@@ -13,7 +14,8 @@ class BiodataUmumController extends Controller
      */
     public function index()
     {
-        //
+        $biodata = BiodataUmum::all();
+        return new ApiResource(true, "Biodata Siswa", $biodata);
     }
 
     /**

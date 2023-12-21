@@ -22,8 +22,5 @@ class BiodataUmum extends Model
         'pend_t_ibu',
         'id_pendaftar'
     ];
-    public function pkjAyah(){
-        return $this->belongsTo('');
-    }
 
 }
