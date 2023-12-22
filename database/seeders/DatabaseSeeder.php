@@ -14,7 +14,6 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         GelombangAktifSeeder::run();
-        CatAgamaSeeder::run();
         CatPekerjaanIbuSeeder::run();
         CatPekerjaanAyahSeeder::run();
         CatPendidikanTerakhirSeeder::run();

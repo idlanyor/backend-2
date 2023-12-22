@@ -20,6 +20,8 @@ Route::post('/login', [AuthController::class, 'loginPendaftar'])->name('login');
 Route::middleware(['auth:pendaftar'])->group(function () {
     Route::apiResource("/pendaftar", StudentUserController::class);
     Route::get("/tahapan", [StudentUserController::class,'tabelProsesPendaftaran']);
+    Route::put("/pendaftar", [StudentUserController::class,'updateDataPendaftar']);
+    Route::get("/biodata", [StudentUserController::class,'getBiodataPendaftar']);
 });
 // Route Log Out
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

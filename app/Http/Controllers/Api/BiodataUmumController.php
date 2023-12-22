@@ -6,6 +6,9 @@ use App\Models\BiodataUmum;
 use App\Http\Requests\StoreBiodataUmumRequest;
 use App\Http\Requests\UpdateBiodataUmumRequest;
 use App\Http\Resources\ApiResource;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class BiodataUmumController extends Controller
 {
@@ -14,16 +17,17 @@ class BiodataUmumController extends Controller
      */
     public function index()
     {
-        $biodata = BiodataUmum::all();
-        return new ApiResource(true, "Biodata Siswa", $biodata);
+        $userId = Auth::id();
+        $biodata = BiodataUmum::where('id_pendaftar', $userId)->get();
+        return new ApiResource(true, "Biodata Pendaftar", $biodata);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        // $validator = Validator::make($request->all)
     }
 
     /**

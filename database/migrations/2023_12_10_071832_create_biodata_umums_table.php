@@ -18,8 +18,7 @@ return new class extends Migration
             $table->enum('jk', ['Laki - laki','Perempuan'])->default('Laki - laki');
             $table->string('tmpt_lahir');
             $table->date('tgl_lahir');
-            $table->unsignedBigInteger('agama');
-            $table->foreign('agama')->references('id')->on('cat_agama')->onDelete('cascade');
+            $table->string('agama');
             $table->string('kewarganegaraan');
             $table->string('addr_prov');
             $table->string('addr_kab');
