@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('tgl_daftar');
             $table->date('tgl_diterima')->nullable(true);
             $table->string('gelombang');
+            $table->string('jalur_pendaftaran');
             $table->string('password');
             $table->timestamps();
         });

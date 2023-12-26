@@ -8,9 +8,7 @@ use App\Http\Resources\ApiResource;
 use App\Models\BiodataUmum;
 use App\Models\StudentUser;
 use App\Models\TahapanProsesPendaftar;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class StudentUserController extends Controller
 {
@@ -36,53 +34,6 @@ class StudentUserController extends Controller
         $biodata = BiodataUmum::where('id_pendaftar', $userId)->get();
         return new ApiResource(true, "Biodata Pendaftar", $biodata);
     }
-    // store student user
-    // public function store(Request $request)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'nama_lengkap' => 'required',
-    //         'email' => 'required|image|mimes:png,jpg,svg,gif,jpeg|max:2048',
-    //         'username' => 'required|unique:users,username',
-    //         'password' => 'required',
-    //         'jabatan' => 'required',
-    //         'role' => 'required',
-    //     ]);
-    //     if ($validator->fails()) {
-    //         return response()->json([
-    //             'error' => $validator->errors()->first(),
-    //         ], 422);
-    //     }
-    //     if ($request->hasFile('image')) {
-    //         $image = $request->file('image');
-    //         $image->storeAs('public/user/thumbnail', $image->hashName());
-
-    //         // create post
-    //         $user = StudentUser::create([
-    //             'nama' => $request->nama,
-    //             'foto_profil' => $image->hashName(),
-    //             'username' => $request->username,
-    //             'password' => bcrypt($request->password),
-    //             'jabatan' => $request->jabatan,
-    //             'role' => $request->role,
-    //         ]);
-    //     } else {
-    //         $user = StudentUser::create([
-    //             'nama' => $request->nama,
-    //             'foto_profil' => 'default-user.png' || NULL,
-    //             'username' => $request->username,
-    //             'password' => bcrypt($request->password),
-    //             'jabatan' => $request->jabatan,
-    //             'role' => $request->role,
-    //         ]);
-    //     }
-
-    //     return new ApiResource(true, 'Data user berhasil ditambahkan', $user);
-    // }
-    // public function show($id)
-    // {
-    //     $user = StudentUser::find($id);
-    //     return new ApiResource(true, 'Detail user', $user);
-    // }
     public function updateDataPendaftar(Request $request)
     {
         $id = auth()->id();
@@ -122,11 +73,4 @@ class StudentUserController extends Controller
 
         return new ApiResource(true, 'Update data berhasil', $user);
     }
-
-    // public function destroy($id)
-    // {
-    //     $user = StudentUser::find($id);
-    //     $user->delete();
-    //     return new ApiResource(true, 'Data user berhasil dihapus', null);
-    // }
 }

@@ -25,6 +25,7 @@ class StudentUser extends Authenticatable implements JWTSubject
         'status',
         'tgl_daftar',
         'gelombang',
+        'jalur_pendaftaran',
         'password',
     ];
 

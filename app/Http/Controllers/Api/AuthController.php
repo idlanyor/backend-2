@@ -51,6 +51,7 @@ class AuthController extends Controller
             "nama_lengkap" => "required",
             "email" => "required|email|unique:pd_users",
             "tgl_lahir" => "required",
+            "jalur_pendaftaran" => "required",
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -66,6 +67,7 @@ class AuthController extends Controller
             "password" => bcrypt($passw),
             "status" => 0,
             "gelombang" => $gelombang_aktif[0],
+            "jalur_pendaftaran" => $request->jalur_pendaftaran,
             'tgl_daftar' => now()->toDateString()
         ]);
         $prosesPendaftar = [
