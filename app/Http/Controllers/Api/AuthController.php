@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
+use PHPOpenSourceSaver\JWTAuth\JWT;
 
 class AuthController extends Controller
 {
@@ -144,6 +145,30 @@ class AuthController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Logout berhasil'
+            ]);
+        }
+    }
+    public function ping(Request $request)
+    {
+        if (auth()->guard('panel')->check()) {
+            // Jika pengguna sudah login pada guard 'panel'
+            return response()->json([
+                'logged_in' => true,
+                'tipe' => 'panel',
+                'user' => auth()->guard('panel')->user(),
+            ]);
+        } elseif (auth()->guard('pendaftar')->check()) {
+            // Jika pengguna sudah login pada guard 'pendaftar'
+            return response()->json([
+                'logged_in' => true,
+                'tipe' => 'pendaftar',
+                'user' => auth()->guard('pendaftar')->user(),
+            ]);
+        } else {
+            // Jika tidak ada pengguna yang terautentikasi
+            return response()->json([
+                'logged_in' => false,
+                'message' => 'Sesi tidak valid,Silahkan login ulang',
             ]);
         }
     }
