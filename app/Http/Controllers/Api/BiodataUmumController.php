@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\BiodataUmum;
-use App\Http\Requests\StoreBiodataUmumRequest;
 use App\Http\Requests\UpdateBiodataUmumRequest;
 use App\Http\Resources\ApiResource;
 use Illuminate\Http\Request;
@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\Validator;
 
 class BiodataUmumController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $userId = Auth::id();
@@ -22,49 +19,76 @@ class BiodataUmumController extends Controller
         return new ApiResource(true, "Biodata Pendaftar", $biodata);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(Request $request)
     {
         // $validator = Validator::make($request->all)
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreBiodataUmumRequest $request)
+    public function store(Request $request)
     {
-        //
+        $id = auth()->id();
+        $validator = Validator::make($request->all(), [
+            'nama_lengkap' => 'required|string',
+            'nik' => 'required|string|unique:pd_biodata_umum,nik|max:16|min:16',
+            'jk' => 'required|in:Laki - laki,Perempuan',
+            'tmpt_lahir' => 'required|string',
+            'tgl_lahir' => 'required|date',
+            'agama' => 'required|string',
+            'kewarganegaraan' => 'required|string',
+            'addr_prov' => 'required|string',
+            'addr_kab' => 'required|string',
+            'addr_kec' => 'required|string',
+            'addr_des' => 'required|string',
+            'addr_dus' => 'required|string',
+            'addr_rt' => 'required|string',
+            'addr_rw' => 'required|string',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $biodata = BiodataUmum::create([
+            "nama_lengkap" => $request->nama_lengkap,
+            "nik" => $request->nik,
+            "jk" => $request->jk,
+            "tmpt_lahir" => $request->tmpt_lahir,
+            "tgl_lahir" => $request->tgl_lahir,
+            "agama" => $request->agama,
+            "kewarganegaraan" => $request->kewarganegaraan,
+            "addr_prov" => $request->addr_prov,
+            "addr_kab" => $request->addr_kab,
+            "addr_kec" => $request->addr_kec,
+            "addr_des" => $request->addr_des,
+            "addr_rt" => $request->addr_rt,
+            "addr_rw" => $request->addr_rw,
+            "id_pendaftar" => $id,
+        ]);
+        if ($biodata) {
+            return response()->json([
+                'success' => true,
+                'data' => $biodata
+            ], 201);
+        }
+
+        return response()->json([
+            'success' => false,
+        ], 409);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(BiodataUmum $biodataUmum)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(BiodataUmum $biodataUmum)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateBiodataUmumRequest $request, BiodataUmum $biodataUmum)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(BiodataUmum $biodataUmum)
     {
         //

@@ -13,6 +13,7 @@ class GelombangPendaftaran extends Model
         "gelombang_ke",
         "isAktif",
         "tahun_pelajaran",
-        "periode_gelombang",
+        "periode_mulai",
+        "periode_akhir",
     ];
 }

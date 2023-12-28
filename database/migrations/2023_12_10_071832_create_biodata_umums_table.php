@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('addr_kab');
             $table->string('addr_kec');
             $table->string('addr_des');
-            $table->string('addr_dus');
             $table->string('addr_rt');
             $table->string('addr_rw');
             $table->unsignedBigInteger('id_pendaftar');

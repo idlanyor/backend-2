@@ -30,7 +30,7 @@ class FilePendaftarController extends Controller
 
         $fileUrls = [];
         foreach ($filePaths as $key => $path) {
-            $fileUrls[$key] = Storage::url('filependaftar/' . $path);
+            $fileUrls[$key] = Storage::url($path);
         }
         $fileUrls['id_pendaftar'] = $data->id_pendaftar;
         return response()->json($fileUrls, 200);
@@ -41,7 +41,7 @@ class FilePendaftarController extends Controller
         $id = auth()->id();
         $validator = Validator::make($request->all(), [
             'kk' => 'required|image|mimes:png,jpg,svg,gif,jpeg|max:2048',
-            'ijazah' => 'required|image|mimes:png,jpg,svg,gif,jpeg|max:2048',
+            'ijazah' => 'image|mimes:png,jpg,svg,gif,jpeg|max:2048|nullable',
             'skl' => 'required|image|mimes:png,jpg,svg,gif,jpeg|max:2048',
             'pasfoto' => 'required|image|mimes:png,jpg,svg,gif,jpeg|max:2048',
         ]);
@@ -50,23 +50,25 @@ class FilePendaftarController extends Controller
                 'error' => $validator->errors()->first(),
             ], 422);
         }
-        $kk = $request->file('kk');
-        $kk->storeAs('filependaftar', $kk->hashName());
-        $ijazah = $request->file('ijazah');
-        $ijazah->storeAs('filependaftar', $ijazah->hashName());
-        $skl = $request->file('skl');
-        $skl->storeAs('filependaftar', $skl->hashName());
-        $pasfoto = $request->file('pasfoto');
-        $pasfoto->storeAs('filependaftar', $pasfoto->hashName());
+        $kk = $request->file('kk')->storeAs('public/filependaftar', $request->file('kk')->hashName());
+        $skl = $request->file('skl')->storeAs('public/filependaftar', $request->file('skl')->hashName());
+        $pasfoto = $request->file('pasfoto')->storeAs('public/filependaftar', $request->file('pasfoto')->hashName());
 
-        // create post
-        $file_pendaftar = FilePendaftar::create([
-            'kk' => $kk->hashName(),
-            'ijazah' => $ijazah->hashName(),
-            'skl' => $skl->hashName(),
-            'pasfoto' => $pasfoto->hashName(),
+        $fileData = [
+            'kk' => $kk,
+            'skl' => $skl,
+            'pasfoto' => $pasfoto,
+            'ijazah' => 'not-uploaded.png',
             'id_pendaftar' => $id
-        ]);
+        ];
+
+        if ($request->has('ijazah')) {
+            $ijazah = $request->file('ijazah')->storeAs('public/filependaftar', $request->file('ijazah')->hashName());
+            $fileData['ijazah'] = $ijazah;
+        }
+
+        $file_pendaftar = FilePendaftar::create($fileData);
+
 
         return new ApiResource(true, 'File pendaftar berhasil ditambahkan', $file_pendaftar);
     }
@@ -104,25 +106,25 @@ class FilePendaftarController extends Controller
         // Lakukan update parsial jika request memiliki file
         if ($request->hasFile('kk')) {
             $kk = $request->file('kk');
-            $kk->storeAs('filependaftar', $kk->hashName());
+            $kk->storeAs('public/filependaftar/kk', $kk->hashName());
             $filePendaftar->kk = $kk->hashName();
         }
 
         if ($request->hasFile('ijazah')) {
             $ijazah = $request->file('ijazah');
-            $ijazah->storeAs('filependaftar', $ijazah->hashName());
+            $ijazah->storeAs('public/filependaftar/ijazah', $ijazah->hashName());
             $filePendaftar->ijazah = $ijazah->hashName();
         }
 
         if ($request->hasFile('skl')) {
             $skl = $request->file('skl');
-            $skl->storeAs('filependaftar', $skl->hashName());
+            $skl->storeAs('public/filependaftar/skl', $skl->hashName());
             $filePendaftar->skl = $skl->hashName();
         }
 
         if ($request->hasFile('pasfoto')) {
             $pasfoto = $request->file('pasfoto');
-            $pasfoto->storeAs('filependaftar', $pasfoto->hashName());
+            $pasfoto->storeAs('public/filependaftar/skl', $pasfoto->hashName());
             $filePendaftar->pasfoto = $pasfoto->hashName();
         }
 

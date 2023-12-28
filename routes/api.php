@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BiodataUmumController;
 use App\Http\Controllers\Api\StudentUserController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\FilePendaftarController;
+use App\Http\Controllers\Api\GelombangAktifController;
 use Illuminate\Support\Facades\Route;
 
 // Route Panel
@@ -13,6 +15,7 @@ Route::get('/ping', [AuthController::class, 'ping'])->name('ping');
 // Route Panel After Login
 Route::middleware(['auth:panel'])->group(function () {
     Route::apiResource("/user", UserController::class);
+    Route::apiResource("/gelombang", GelombangAktifController::class);
 });
 // Route Pendaftar
 Route::post('/registrasi', [AuthController::class, 'registerPendaftar'])->name('registrasi');
@@ -23,6 +26,9 @@ Route::post('/login', [AuthController::class, 'loginPendaftar'])->name('login');
 Route::middleware(['auth:pendaftar'])->group(function () {
     Route::apiResource("/pendaftar", StudentUserController::class);
     Route::get('/file-pendaftar', [FilePendaftarController::class, 'index']);
+    Route::get('/biodata-umum', [BiodataUmumController::class, 'index']);
+    Route::post('/biodata-umum', [BiodataUmumController::class, 'store']);
+    Route::patch('/biodata-umum', [BiodataUmumController::class, 'update']);
     Route::post('/file-pendaftar', [FilePendaftarController::class, 'store']);
     Route::patch('/file-pendaftar', [FilePendaftarController::class, 'update']);
     Route::get("/tahapan", [StudentUserController::class, 'tabelProsesPendaftaran']);
