@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('jalur_pendaftaran', function (Blueprint $table) {
             $table->id();
             $table->string('nama_jalur');
-            $table->string('periode');
             $table->string('kuota');
             $table->timestamps();
         });
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jalur_pendaftarans');
+        Schema::dropIfExists('jalur_pendaftaran');
     }
 };

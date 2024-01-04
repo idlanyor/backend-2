@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\JalurPendaftaran;
-use App\Http\Requests\StoreJalurPendaftaranRequest;
-use App\Http\Requests\UpdateJalurPendaftaranRequest;
+use App\Models\JadwalJalurPendaftaran;
+use App\Http\Requests\StoreJadwalJalurPendaftaranRequest;
+use App\Http\Requests\UpdateJadwalJalurPendaftaranRequest;
 
-class JalurPendaftaranController extends Controller
+class JadwalJalurPendaftaranController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class JalurPendaftaranController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreJalurPendaftaranRequest $request)
+    public function store(StoreJadwalJalurPendaftaranRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class JalurPendaftaranController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(JalurPendaftaran $jalurPendaftaran)
+    public function show(JadwalJalurPendaftaran $jadwalJalurPendaftaran)
     {
         //
     }
@@ -43,7 +43,7 @@ class JalurPendaftaranController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(JalurPendaftaran $jalurPendaftaran)
+    public function edit(JadwalJalurPendaftaran $jadwalJalurPendaftaran)
     {
         //
     }
@@ -51,7 +51,7 @@ class JalurPendaftaranController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateJalurPendaftaranRequest $request, JalurPendaftaran $jalurPendaftaran)
+    public function update(UpdateJadwalJalurPendaftaranRequest $request, JadwalJalurPendaftaran $jadwalJalurPendaftaran)
     {
         //
     }
@@ -59,7 +59,7 @@ class JalurPendaftaranController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(JalurPendaftaran $jalurPendaftaran)
+    public function destroy(JadwalJalurPendaftaran $jadwalJalurPendaftaran)
     {
         //
     }

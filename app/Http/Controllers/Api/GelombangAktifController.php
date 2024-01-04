@@ -24,9 +24,12 @@ class GelombangAktifController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function getGelombangAktif()
     {
-        //
+        $q = GelombangPendaftaran::query();
+        $q->where('isAktif', 1);
+        $gelombang_aktif = $q->pluck('gelombang_ke');
+        return $gelombang_aktif;
     }
 
     /**

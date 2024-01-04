@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
         CatPendidikanTerakhirSeeder::run();
         CatPenghasilanSeeder::run();
         TahapanProsesSeeder::run();
+        JalurPendaftaranSeeder::run();
+        JadwalJalurPendaftaranSeeder::run();
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
