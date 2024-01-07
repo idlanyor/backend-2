@@ -50,21 +50,21 @@ class FilePendaftarController extends Controller
                 'error' => $validator->errors()->first(),
             ], 422);
         }
-        $kk = $request->file('kk')->storeAs('public/filependaftar', $request->file('kk')->hashName());
-        $skl = $request->file('skl')->storeAs('public/filependaftar', $request->file('skl')->hashName());
-        $pasfoto = $request->file('pasfoto')->storeAs('public/filependaftar', $request->file('pasfoto')->hashName());
+        $kk = $request->file('kk')->storeAs('public/filependaftar/kk', $request->file('kk')->hashName());
+        $skl = $request->file('skl')->storeAs('public/filependaftar/skl', $request->file('skl')->hashName());
+        $pasfoto = $request->file('pasfoto')->storeAs('public/filependaftar/pasfoto', $request->file('pasfoto')->hashName());
 
         $fileData = [
-            'kk' => $kk,
-            'skl' => $skl,
-            'pasfoto' => $pasfoto,
+            'kk' => str_replace('public/', '', $kk),
+            'skl' => str_replace('public/', '', $skl),
+            'pasfoto' => str_replace('public/', '', $pasfoto),
             'ijazah' => 'not-uploaded.png',
             'id_pendaftar' => $id
         ];
 
         if ($request->has('ijazah')) {
-            $ijazah = $request->file('ijazah')->storeAs('public/filependaftar', $request->file('ijazah')->hashName());
-            $fileData['ijazah'] = $ijazah;
+            $ijazah = $request->file('ijazah')->storeAs('public/filependaftar/ijazah', $request->file('ijazah')->hashName());
+            $fileData['ijazah'] = str_replace('public/', '', $kk);
         }
 
         $file_pendaftar = FilePendaftar::create($fileData);
