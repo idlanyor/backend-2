@@ -7,16 +7,16 @@ use App\Models\BiodataUmum;
 use App\Http\Requests\UpdateBiodataUmumRequest;
 use App\Http\Resources\ApiResource;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class BiodataUmumController extends Controller
 {
     public function index()
     {
-        $userId = Auth::id();
-        $biodata = BiodataUmum::where('id_pendaftar', $userId)->get();
-        return new ApiResource(true, "Biodata Pendaftar", $biodata);
+        $userId = auth()->id();
+        $biodata = BiodataUmum::where('id_pendaftar', $userId)->first();
+        return new ApiResource('Sukses', 'Biodata Umum', $biodata);
+        // return new BiodataUmumResource($biodata);
     }
 
     public function create(Request $request)
