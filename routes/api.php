@@ -33,10 +33,10 @@ Route::middleware(['auth:pendaftar'])->group(function () {
     Route::apiResource("/pendaftar", StudentUserController::class);
     Route::get('/file-pendaftar', [FilePendaftarController::class, 'index']);
     Route::get('/biodata-umum', [BiodataUmumController::class, 'index']);
-    Route::post('/biodata-umum', [BiodataUmumController::class, 'store']);
-    Route::patch('/biodata-umum', [BiodataUmumController::class, 'update']);
-    Route::post('/file-pendaftar', [FilePendaftarController::class, 'store']);
-    Route::patch('/file-pendaftar', [FilePendaftarController::class, 'update']);
+    Route::patch('/biodata-umum', [BiodataUmumController::class, 'store']);
+    Route::post('/biodata-umum', [BiodataUmumController::class, 'update']);
+    // Route::post('/file-pendaftar', [FilePendaftarController::class, 'store']);
+    Route::post('/file-pendaftar', [FilePendaftarController::class, 'update']);
     Route::get("/tahapan", [StudentUserController::class, 'tabelProsesPendaftaran']);
     Route::put("/pendaftar", [StudentUserController::class, 'updateDataPendaftar']);
     Route::get("/biodata", [StudentUserController::class, 'getBiodataPendaftar']);

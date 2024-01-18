@@ -52,7 +52,7 @@ class FilePendaftarController extends Controller
 
         if ($request->has('ijazah')) {
             $ijazah = $request->file('ijazah')->storeAs('public/filependaftar/ijazah', $request->file('ijazah')->hashName());
-            $fileData['ijazah'] = str_replace('public/', '', $kk);
+            $fileData['ijazah'] = str_replace('public/', '', $ijazah);
         }
 
         $file_pendaftar = FilePendaftar::create($fileData);
@@ -84,43 +84,42 @@ class FilePendaftarController extends Controller
             ], 422);
         }
 
-        // Temukan data file pendaftar berdasarkan ID pendaftar
-        $filePendaftar = FilePendaftar::where('id_pendaftar', $idPendaftar)->first();
+        // Temukan atau buat data file pendaftar berdasarkan ID pendaftar
+        $filePendaftar = FilePendaftar::updateOrCreate(
+            ['id_pendaftar' => $idPendaftar],
+            // Data yang akan diupdate atau dibuat jika tidak ditemukan
+            [
+                'kk' => $request->hasFile('kk') ? $request->file('kk')->hashName() : null,
+                'ijazah' => $request->hasFile('ijazah') ? $request->file('ijazah')->hashName() : null,
+                'skl' => $request->hasFile('skl') ? $request->file('skl')->hashName() : null,
+                'pasfoto' => $request->hasFile('pasfoto') ? $request->file('pasfoto')->hashName() : null,
+            ]
+        );
 
-        if (!$filePendaftar) {
-            return response()->json(['message' => 'File Pendaftar not found'], 404);
-        }
-
-        // Lakukan update parsial jika request memiliki file
+        // Lakukan update jika request memiliki file
         if ($request->hasFile('kk')) {
             $kk = $request->file('kk');
-            $kk->storeAs('public/filependaftar/kk', $kk->hashName());
-            $filePendaftar->kk = $kk->hashName();
+            $kk->storeAs('public/filependaftar', $kk->hashName());
         }
 
         if ($request->hasFile('ijazah')) {
             $ijazah = $request->file('ijazah');
-            $ijazah->storeAs('public/filependaftar/ijazah', $ijazah->hashName());
-            $filePendaftar->ijazah = $ijazah->hashName();
+            $ijazah->storeAs('public/filependaftar', $ijazah->hashName());
         }
 
         if ($request->hasFile('skl')) {
             $skl = $request->file('skl');
-            $skl->storeAs('public/filependaftar/skl', $skl->hashName());
-            $filePendaftar->skl = $skl->hashName();
+            $skl->storeAs('public/filependaftar', $skl->hashName());
         }
 
         if ($request->hasFile('pasfoto')) {
             $pasfoto = $request->file('pasfoto');
-            $pasfoto->storeAs('public/filependaftar/skl', $pasfoto->hashName());
-            $filePendaftar->pasfoto = $pasfoto->hashName();
+            $pasfoto->storeAs('public/filependaftar', $pasfoto->hashName());
         }
-
-        // Simpan perubahan pada data file pendaftar
-        $filePendaftar->save();
 
         return new ApiResource(true, 'File pendaftar berhasil diupdate', $filePendaftar);
     }
+
 
     public function destroy($id)
     {
