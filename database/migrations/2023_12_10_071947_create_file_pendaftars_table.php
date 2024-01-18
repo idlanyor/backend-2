@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('file_pendaftar', function (Blueprint $table) {
             $table->id();
-            $table->string('kk');
-            $table->string('ijazah');
-            $table->string('skl');
-            $table->string('pasfoto');
+            $table->string('kk')->nullable();
+            $table->string('ijazah')->nullable();
+            $table->string('skl')->nullable();
+            $table->string('pasfoto')->nullable();
             $table->unsignedBigInteger('id_pendaftar');
             $table->foreign('id_pendaftar')->references('id')->on('pd_users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
