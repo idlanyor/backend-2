@@ -21,19 +21,7 @@ class FilePendaftarController extends Controller
         }
 
         // Ubah path yang disimpan dalam database menjadi URL yang dapat diakses
-        $filePaths = [
-            'kk' => $data->kk,
-            'ijazah' => $data->ijazah,
-            'skl' => $data->skl,
-            'pasfoto' => $data->pasfoto,
-        ];
-
-        $fileUrls = [];
-        foreach ($filePaths as $key => $path) {
-            $fileUrls[$key] = Storage::url($path);
-        }
-        $fileUrls['id_pendaftar'] = $data->id_pendaftar;
-        return response()->json($fileUrls, 200);
+        return new ApiResource('Sukses', 'File Pendaftar', $data);
     }
 
     public function store(Request $request)
