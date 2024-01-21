@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TahunAkademik;
 use App\Http\Requests\StoreTahunAkademikRequest;
 use App\Http\Requests\UpdateTahunAkademikRequest;
+use App\Http\Resources\ApiResource;
 
 class TahunAkademikController extends Controller
 {
@@ -13,7 +14,8 @@ class TahunAkademikController extends Controller
      */
     public function index()
     {
-        //
+        $tahun = TahunAkademik::all();
+        return new ApiResource('Sukses', 'Tahun Akademik', $tahun);
     }
 
     /**

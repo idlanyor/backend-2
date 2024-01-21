@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\FilePendaftarController;
 use App\Http\Controllers\Api\GelombangAktifController;
 use App\Http\Controllers\Api\PostsController;
 use App\Http\Controllers\api\JalurPendaftaranController;
+use App\Http\Controllers\TahunAkademikController;
+use App\Models\JadwalJalurPendaftaran;
 use Illuminate\Support\Facades\Route;
 
 // Route Panel
@@ -17,11 +19,13 @@ Route::get('/ping', [AuthController::class, 'ping'])->name('ping');
 Route::get('/pengumuman', [PostsController::class, 'pengumuman'])->name('pengumuman');
 Route::get('/jadwal', [PostsController::class, 'jadwal'])->name('jadwal');
 Route::get('/biaya', [PostsController::class, 'biaya'])->name('biaya');
-Route::apiResource("panel/jalur", JalurPendaftaranController::class);
 // Route Panel After Login
 Route::middleware(['auth:panel'])->group(function () {
     Route::apiResource("panel/user", UserController::class);
     Route::apiResource("panel/gelombang", GelombangAktifController::class);
+    Route::apiResource("panel/tahun-akademik", TahunAkademikController::class);
+    Route::apiResource("panel/jalur", JalurPendaftaranController::class);
+    Route::apiResource("panel/jadwal", JadwalJalurPendaftaran::class);
     Route::apiResource("panel/pendaftar", StudentUserController::class);
 });
 // Route Pendaftar
@@ -33,8 +37,8 @@ Route::middleware(['auth:pendaftar'])->group(function () {
     Route::apiResource("/pendaftar", StudentUserController::class);
     Route::get('/file-pendaftar', [FilePendaftarController::class, 'index']);
     Route::get('/biodata-umum', [BiodataUmumController::class, 'index']);
-    Route::patch('/biodata-umum', [BiodataUmumController::class, 'store']);
-    Route::post('/biodata-umum', [BiodataUmumController::class, 'update']);
+    Route::post('/biodata-umum', [BiodataUmumController::class, 'store']);
+    Route::patch('/biodata-umum', [BiodataUmumController::class, 'update']);
     // Route::post('/file-pendaftar', [FilePendaftarController::class, 'store']);
     Route::post('/file-pendaftar', [FilePendaftarController::class, 'update']);
     Route::get("/tahapan", [StudentUserController::class, 'tabelProsesPendaftaran']);

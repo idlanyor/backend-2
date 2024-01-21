@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\JadwalJalurPendaftaran;
 use App\Http\Requests\StoreJadwalJalurPendaftaranRequest;
 use App\Http\Requests\UpdateJadwalJalurPendaftaranRequest;
+use App\Http\Resources\ApiResource;
 
 class JadwalJalurPendaftaranController extends Controller
 {
@@ -13,7 +14,8 @@ class JadwalJalurPendaftaranController extends Controller
      */
     public function index()
     {
-        //
+        $jadwal = JadwalJalurPendaftaran::all();
+        return new ApiResource('Sukses', "Jadwal Jalur Pendaftaran", $jadwal);
     }
 
     /**

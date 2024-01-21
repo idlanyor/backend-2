@@ -83,17 +83,25 @@ class FilePendaftarController extends Controller
                 'error' => $validator->errors()->first(),
             ], 422);
         }
+        $kirim = [];
+        if ($request->hasFile('kk')) {
+            $kirim['kk'] = $request->file('kk')->hashName();
+        }
+        if ($request->hasFile('ijazah')) {
+            $kirim['ijazah'] = $request->file('ijazah')->hashName();
+        }
+        if ($request->hasFile('skl')) {
+            $kirim['skl'] = $request->file('skl')->hashName();
+        }
+        if ($request->hasFile('pasfoto')) {
+            $kirim['pasfoto'] = $request->file('pasfoto')->hashName();
+        }
 
         // Temukan atau buat data file pendaftar berdasarkan ID pendaftar
         $filePendaftar = FilePendaftar::updateOrCreate(
             ['id_pendaftar' => $idPendaftar],
             // Data yang akan diupdate atau dibuat jika tidak ditemukan
-            [
-                'kk' => $request->hasFile('kk') ? $request->file('kk')->hashName() : null,
-                'ijazah' => $request->hasFile('ijazah') ? $request->file('ijazah')->hashName() : null,
-                'skl' => $request->hasFile('skl') ? $request->file('skl')->hashName() : null,
-                'pasfoto' => $request->hasFile('pasfoto') ? $request->file('pasfoto')->hashName() : null,
-            ]
+            $kirim
         );
 
         // Lakukan update jika request memiliki file
