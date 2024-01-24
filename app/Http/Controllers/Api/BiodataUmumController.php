@@ -29,7 +29,7 @@ class BiodataUmumController extends Controller
         $id = auth()->id();
         $validator = Validator::make($request->all(), [
             'nama_lengkap' => 'required|string',
-            'nik' => 'required|string|unique:pd_biodata_umum,nik|max:16|min:16',
+            'nik' => 'required|string|max:16|min:16',
             'jk' => 'required|in:Laki - laki,Perempuan',
             'tmpt_lahir' => 'required|string',
             'tgl_lahir' => 'required|date',
@@ -43,25 +43,30 @@ class BiodataUmumController extends Controller
             'addr_rt' => 'required|string',
             'addr_rw' => 'required|string',
         ]);
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        $biodata = BiodataUmum::create([
-            "nama_lengkap" => $request->nama_lengkap,
-            "nik" => $request->nik,
-            "jk" => $request->jk,
-            "tmpt_lahir" => $request->tmpt_lahir,
-            "tgl_lahir" => $request->tgl_lahir,
-            "agama" => $request->agama,
-            "kewarganegaraan" => $request->kewarganegaraan,
-            "addr_prov" => $request->addr_prov,
-            "addr_kab" => $request->addr_kab,
-            "addr_kec" => $request->addr_kec,
-            "addr_des" => $request->addr_des,
-            "addr_rt" => $request->addr_rt,
-            "addr_rw" => $request->addr_rw,
-            "id_pendaftar" => $id,
-        ]);
+
+        $biodata = BiodataUmum::updateOrCreate(
+            ['nik' => $request->nik],
+            [
+                "nama_lengkap" => $request->nama_lengkap,
+                "jk" => $request->jk,
+                "tmpt_lahir" => $request->tmpt_lahir,
+                "tgl_lahir" => $request->tgl_lahir,
+                "agama" => $request->agama,
+                "kewarganegaraan" => $request->kewarganegaraan,
+                "addr_prov" => $request->addr_prov,
+                "addr_kab" => $request->addr_kab,
+                "addr_kec" => $request->addr_kec,
+                "addr_des" => $request->addr_des,
+                "addr_rt" => $request->addr_rt,
+                "addr_rw" => $request->addr_rw,
+                "id_pendaftar" => $id,
+            ]
+        );
+
         if ($biodata) {
             return response()->json([
                 'success' => true,
@@ -73,6 +78,7 @@ class BiodataUmumController extends Controller
             'success' => false,
         ], 409);
     }
+
 
     public function show(BiodataUmum $biodataUmum)
     {

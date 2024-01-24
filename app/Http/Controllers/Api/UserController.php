@@ -21,7 +21,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required',
-            'foto_profil' => 'required|image|mimes:png,jpg,svg,gif,jpeg|max:2048',
+            // 'foto_profil' => 'required|image|mimes:png,jpg,svg,gif,jpeg|max:2048',
             'username' => 'required|unique:users,username',
             'password' => 'required',
             'jabatan' => 'required',
@@ -32,29 +32,29 @@ class UserController extends Controller
                 'error' => $validator->errors()->first(),
             ], 422);
         }
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image->storeAs('public/user/thumbnail', $image->hashName());
+        // if ($request->hasFile('image')) {
+        //     $image = $request->file('image');
+        //     $image->storeAs('public/user/thumbnail', $image->hashName());
 
-            // create post
-            $user = User::create([
-                'nama' => $request->nama,
-                'foto_profil' => $image->hashName(),
-                'username' => $request->username,
-                'password' => bcrypt($request->password),
-                'jabatan' => $request->jabatan,
-                'role' => $request->role,
-            ]);
-        } else {
-            $user = User::create([
-                'nama' => $request->nama,
-                'foto_profil' => 'default-user.png' || NULL,
-                'username' => $request->username,
-                'password' => bcrypt($request->password),
-                'jabatan' => $request->jabatan,
-                'role' => $request->role,
-            ]);
-        }
+        //     // create post
+        //     $user = User::create([
+        //         'nama' => $request->nama,
+        //         'foto_profil' => $image->hashName(),
+        //         'username' => $request->username,
+        //         'password' => bcrypt($request->password),
+        //         'jabatan' => $request->jabatan,
+        //         'role' => $request->role,
+        //     ]);
+        // } else {
+        $user = User::create([
+            'nama' => $request->nama,
+            'foto_profil' => 'default-user.png' || NULL,
+            'username' => $request->username,
+            'password' => bcrypt($request->password),
+            'jabatan' => $request->jabatan,
+            'role' => $request->role,
+        ]);
+        // }
 
         return new ApiResource(true, 'Data user berhasil ditambahkan', $user);
     }
@@ -68,47 +68,78 @@ class UserController extends Controller
         $user = User::find($id);
         $validator = Validator::make($request->all(), [
             'nama' => 'required',
-            'foto_profil' => 'required|image|mimes:png,jpg,svg,gif,jpeg|max:2048',
+            // 'foto_profil' => 'required|image|mimes:png,jpg,svg,gif,jpeg|max:2048',
             'username' => 'required|unique:users,username',
             'password' => 'required',
             'jabatan' => 'required',
             'role' => 'required',
         ]);
-        if ($validator->fails()) {
+        $id = auth()->id();
+        $user = User::find($id);
+        $validator = Validator::make($request->all(), [
+            'nama' => 'sometimes',
+            'username' => 'sometimes|unique:users,username,' . $id,
+            'password' => 'sometimes',
+            'jabatan' => 'sometimes',
+            'role' => 'sometimes',
+        ]);
 
+        if ($validator->fails()) {
             return response()->json([
                 'error' => $validator->errors()->first(),
             ], 422);
         }
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image->storeAs('public/user/thumbnail', $image->hashName());
 
-            Storage::delete('public/user/thumbnail' . basename($user->image));
-            // Update user
-            $user = User::create([
-                'nama' => $request->nama,
-                'foto_profil' => $image->hashName(),
-                'username' => $request->username,
-                'password' => bcrypt($request->password),
-                'jabatan' => $request->jabatan,
-                'role' => $request->role,
-            ]);
-        } else {
-            $user->update([
-                'judul' => $request->judul,
-                'penulis' => $request->penulis,
-                'penerbit' => $request->penerbit,
-                'deskripsi' => $request->deskripsi,
-                'tahun_terbit' => $request->tahun_terbit,
-            ]);
+        $dataToUpdate = [];
+
+        if ($request->filled('nama_lengkap')) {
+            $dataToUpdate['nama_lengkap'] = $request->nama_lengkap;
         }
-        return new ApiResource(true, 'Buku berhasil diupdate', $user);
+
+        if ($request->filled('email')) {
+            $dataToUpdate['email'] = $request->email;
+        }
+
+        if ($request->filled('tgl_lahir')) {
+            $dataToUpdate['tgl_lahir'] = $request->tgl_lahir;
+        }
+
+        if ($request->filled('password')) {
+            $dataToUpdate['password'] = bcrypt($request->password);
+        }
+
+        $user->update($dataToUpdate);
+
+        return new ApiResource(true, 'Update data berhasil', $user);
+        // if ($request->hasFile('image')) {
+        //     $image = $request->file('image');
+        //     $image->storeAs('public/user/thumbnail', $image->hashName());
+
+        //     Storage::delete('public/user/thumbnail' . basename($user->image));
+        //     // Update user
+        //     $user = User::create([
+        //         'nama' => $request->nama,
+        //         'foto_profil' => $image->hashName(),
+        //         'username' => $request->username,
+        //         'password' => bcrypt($request->password),
+        //         'jabatan' => $request->jabatan,
+        //         'role' => $request->role,
+        //     ]);
+        // } else {
+        // $user->update([
+        //     'nama' => $request->nama,
+        //     'username' => $request->username,
+        //     'jabatan' => $request->jabatan,
+        //     'role' => $request->role,
+        // ]);
+        // 'tahun_terbit' => $request->tahun_terbit,
+        // }
+        // return new ApiResource(true, 'Buku berhasil diupdate', $user);
     }
     public function destroy($id)
     {
         $user = User::find($id);
-        Storage::delete('public/user/thumbnail' . basename($user->image));
+        // Storage::delete('public/user/thumbnail' . basename($user->image));
         $user->delete();
         return new ApiResource(true, 'Data user berhasil dihapus', null);
     }
